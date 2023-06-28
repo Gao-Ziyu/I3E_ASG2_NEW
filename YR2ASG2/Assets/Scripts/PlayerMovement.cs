@@ -187,8 +187,8 @@ public class PlayerMovement : MonoBehaviour
         transform.position += movementVector * movementSpeed * Time.deltaTime;
 
         //Apply the rotation mutiplied by the rotation speed
-        transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles + rotationInput * rotationSpeed * Time.deltaTime);
-        camera.transform.rotation = Quaternion.Euler(camera.transform.rotation.eulerAngles + headRotationInput * rotationSpeed * Time.deltaTime);
+        //transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles + rotationInput * rotationSpeed * Time.deltaTime);
+        //camera.transform.rotation = Quaternion.Euler(camera.transform.rotation.eulerAngles + headRotationInput * rotationSpeed * Time.deltaTime);
 
 
         //make sure player dont move when camera is moving / rotating
