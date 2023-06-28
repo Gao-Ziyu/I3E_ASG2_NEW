@@ -23,6 +23,7 @@ public class TriggerPlayer : MonoBehaviour
         if (other.gameObject.CompareTag("player"))
         {
             playerInRange = true;
+            Debug.Log("player in range fuck");
 
         }
     }

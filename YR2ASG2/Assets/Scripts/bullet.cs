@@ -9,6 +9,7 @@ public class bullet : MonoBehaviour
         if (other.gameObject.tag == "player")
         {
             Destroy(gameObject);
+            Debug.Log("touch me");
         }
     }
 }

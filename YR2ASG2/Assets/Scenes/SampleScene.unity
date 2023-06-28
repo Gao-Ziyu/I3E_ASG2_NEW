@@ -4397,7 +4397,6 @@ GameObject:
   - component: {fileID: 751471907}
   - component: {fileID: 751471906}
   - component: {fileID: 751471905}
-  - component: {fileID: 751471904}
   - component: {fileID: 751471903}
   - component: {fileID: 751471910}
   - component: {fileID: 751471911}
@@ -4430,20 +4429,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!64 &751471904
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 751471902}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 1231433934}
 --- !u!33 &751471905
 MeshFilter:
   m_ObjectHideFlags: 10
@@ -5173,8 +5158,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2.0000002, y: 6, z: 4.000001}
-  m_Center: {x: -0.99987805, y: 3, z: 2.0000005}
+  m_Size: {x: 48.09897, y: 5.999999, z: 7.498287}
+  m_Center: {x: -4.458172, y: 2.9999995, z: 1.8196973}
 --- !u!1 &760902939
 GameObject:
   m_ObjectHideFlags: 0
@@ -5350,11 +5335,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 831911912}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4df7d71c4c977460eb577eddcbd6b955, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  capsule: {fileID: 0}
   OnGunShoot:
     m_PersistentCalls:
       m_Calls:
@@ -5373,7 +5359,7 @@ MonoBehaviour:
   FireCooldown: 0
   Automatic: 0
   fpsCamera: {fileID: 0}
-  shooting_sound: {fileID: 0}
+  shooting_sound: {fileID: 831911915}
 --- !u!114 &831911914
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5400,7 +5386,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 08f78eba48bb21c44ac5a74ca84efc83, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 3dc7b4438e9f788479f2eba0e75191b1, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -5713,7 +5699,7 @@ AudioSource:
   m_GameObject: {fileID: 876799241}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 76c8bfedcf9674a129d66cc40886dcb4, type: 2}
   m_audioClip: {fileID: 8300000, guid: bcc638923e2dc4622acc6a39e66d1077, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
@@ -7500,7 +7486,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1028480780}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -20.75, y: 1.61, z: -36.390755}
+  m_LocalPosition: {x: -20.75, y: 1.61, z: -32.55}
   m_LocalScale: {x: 2.0042, y: 2.6593194, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8784,7 +8770,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh24510
+  m_Name: pb_Mesh275986
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -25146,7 +25132,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh24670
+  m_Name: pb_Mesh276186
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2

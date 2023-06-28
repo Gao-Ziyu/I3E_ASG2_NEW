@@ -45,6 +45,7 @@ public class Dialogue : MonoBehaviour
         }
         else if (map)
         {
+            Debug.Log(maps[index]);
             if (Input.GetMouseButtonDown(0))
             {
                 if (textComponent.text == maps[index])

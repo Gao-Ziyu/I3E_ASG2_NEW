@@ -64,6 +64,7 @@ public class Entity : MonoBehaviour
         if (walkPointSet)
         {
             agent.SetDestination(walkPoint);
+            Debug.Log("patrolling " + walkPoint);
         }
 
         Vector3 distanceToWalkPoint = transform.position - walkPoint;

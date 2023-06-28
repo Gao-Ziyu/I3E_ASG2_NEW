@@ -50,12 +50,19 @@ public class PlayerMovement : MonoBehaviour
     Vector3 headRotationInput;
 
     public bool deadge = false;
+
+    float interactionDistance = 3f;
+    float interactionRange = 3f;
+
+    public interface IInteractable
+    {
+        public void Interact();
+    }
+
     public void Awake()
     {
         DontDestroyOnLoad(gameObject);
     }
-    // audio
-    //public AudioSource bgm;
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -74,10 +81,6 @@ public class PlayerMovement : MonoBehaviour
         if (collision.gameObject.tag == "sDoor")
         {
 
-        }
-        if (collision.gameObject.tag == "card")
-        {
-            collision.gameObject.GetComponent<card>().Collected();
         }
     }
 
@@ -128,20 +131,28 @@ public class PlayerMovement : MonoBehaviour
 
     void OnInteract(InputValue value) // when E pressed, interact
     {
-        if(gunCollected == true)
+        Ray r = new Ray(transform.position, transform.forward);
+        Debug.DrawRay(transform.position, transform.forward * interactionRange, Color.red, 1.0f);
+        if (Physics.Raycast(r, out RaycastHit hitInfo, interactionRange))
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-            if (Physics.Raycast(ray, out hit, 100) && hit.collider.tag == "gun")
+            Debug.Log("Hit : " + hitInfo.transform.gameObject.name);
+            // call the interact function on the interct object
+            if (hitInfo.collider.gameObject.TryGetComponent(out IInteractable interactObj))
             {
-                Debug.Log("pick up gun");
-                PlayerAttack.SetActive(true);
-                PlayerAim.SetActive(true);
-
+                interactObj.Interact();
+                Debug.Log("Interacted with " + hitInfo.collider.gameObject.name);
             }
         }
-        if (cardCollected == true)
+
+
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Debug.DrawRay(transform.position, transform.forward * interactionRange, Color.red, 1.0f);
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit, 100) && hit.collider.tag == "gun")
         {
+            Debug.Log("pick up gun");
+            PlayerAttack.SetActive(true);
+            PlayerAim.SetActive(true);
 
         }
     }
@@ -201,6 +212,14 @@ public class PlayerMovement : MonoBehaviour
             * rotationSpeed;
         camera.rotation = Quaternion.Euler(headRot);
 
+        RaycastHit hitInfo;
+        if(Physics.Raycast(transform.position, transform.forward, out hitInfo, interactionDistance))
+        {
+            Debug.Log(hitInfo.transform.name); 
+        }
+
+
+
         //when shift is pressed, the chargebar will decrease
         //when shift is released, the chargebar will increase
         if (Input.GetKeyUp(KeyCode.LeftShift) || Input.GetKeyUp(KeyCode.RightShift))
@@ -231,7 +250,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         //pick gun up
-        if (Input.GetKeyUp(KeyCode.E))
+        /*if (Input.GetKeyUp(KeyCode.E))
         {
             Debug.Log("gun picked");
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -243,7 +262,7 @@ public class PlayerMovement : MonoBehaviour
                 PlayerAim.SetActive(true);
 
             }
-        }
+        }*/
 
     }
     public void TakeDamage(int damage)

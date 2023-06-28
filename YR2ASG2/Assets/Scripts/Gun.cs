@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class Gun : MonoBehaviour
 {
+    [SerializeField] PlayerMovement capsule;
     public UnityEvent OnGunShoot;
     public float FireCooldown;
 
@@ -51,5 +53,17 @@ public class Gun : MonoBehaviour
 
 
         CurrentCooldown -= Time.deltaTime;
+    }
+    public void Collected()
+    {
+        Interact();
+    }
+
+    public void Interact()
+    {
+
+        Debug.Log("gun collected");
+        capsule.gunCollected = true;
+        Destroy(gameObject);
     }
 }

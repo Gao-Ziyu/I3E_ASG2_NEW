@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
+using static PlayerMovement;
 
 public class card : MonoBehaviour, IInteractable
 {
@@ -31,6 +32,7 @@ public class card : MonoBehaviour, IInteractable
 
     public void Interact()
     {
+
         Debug.Log("card collected");
         capsule.cardCollected = true;
         Destroy(gameObject);
