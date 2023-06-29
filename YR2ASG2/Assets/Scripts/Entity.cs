@@ -1,6 +1,6 @@
 /* Author: Gao Ziyu
  * Date: 09/ 06 /2023
- * Description: The Entity class is used for enemy AI controls
+ * Description: The Entity class is used for enemy AI
  */
 using System.Collections;
 using System.Collections.Generic;

@@ -82,9 +82,10 @@ public class PlayerMovement : MonoBehaviour
         {
             dialogue.MapDialogue();
         }
-        if (collision.gameObject.tag == "sDoor")
+        if (collision.gameObject.tag == "lava")
         {
-
+            deadge = true;
+            Debug.Log("i die u win");
         }
     }
 
@@ -145,19 +146,15 @@ public class PlayerMovement : MonoBehaviour
             {
                 interactObj.Interact();
                 Debug.Log("Interacted with " + hitInfo.collider.gameObject.name);
+
+                if (hitInfo.collider.gameObject.tag == "gun")
+                {
+                    PlayerAttack.SetActive(true);
+                    PlayerAim.SetActive(true);
+
+                    PlayerAttack.GetComponent<Gun>().Enable();
+                }
             }
-        }
-
-
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        Debug.DrawRay(transform.position, transform.forward * interactionRange, Color.red, 1.0f);
-        RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, 100) && hit.collider.tag == "gun")
-        {
-            Debug.Log("pick up gun");
-            PlayerAttack.SetActive(true);
-            PlayerAim.SetActive(true);
-
         }
     }
 
@@ -171,6 +168,9 @@ public class PlayerMovement : MonoBehaviour
         healthbar.SetMaxHealth(maxHealth);
         PlayerAttack.SetActive(false);
         PlayerAim.SetActive(false);
+
+        gunCollected = false;
+        cardCollected = false;
     }
 
     // Update is called once per frame
@@ -188,7 +188,7 @@ public class PlayerMovement : MonoBehaviour
         GetComponent<Rigidbody>().MovePosition(transform.position +
             (forwardDir + rightDir) * movementSpeed);*/
 
-        
+
         //create a new vector3
         Vector3 movementVector = Vector3.zero;
 
@@ -217,9 +217,9 @@ public class PlayerMovement : MonoBehaviour
         camera.rotation = Quaternion.Euler(headRot);
 
         RaycastHit hitInfo;
-        if(Physics.Raycast(transform.position, transform.forward, out hitInfo, interactionDistance))
+        if (Physics.Raycast(transform.position, transform.forward, out hitInfo, interactionDistance))
         {
-            Debug.Log(hitInfo.transform.name); 
+            Debug.Log(hitInfo.transform.name);
         }
 
 

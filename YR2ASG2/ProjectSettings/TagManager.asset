@@ -15,6 +15,7 @@ TagManager:
   - barrier
   - gun
   - spawnPlayer
+  - lava
   layers:
   - Default
   - TransparentFX
