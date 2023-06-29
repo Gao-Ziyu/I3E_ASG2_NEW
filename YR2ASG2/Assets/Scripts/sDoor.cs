@@ -1,3 +1,7 @@
+/* Author: Gao Ziyu
+ * Date: 09/ 06 /2023
+ * Description: The sDoors class is used for locked doors and controls
+ */
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

@@ -1,3 +1,7 @@
+/* Author: Gao Ziyu
+ * Date: 09/ 06 /2023
+ * Description: The GunDamage class is used for damages done by gun
+ */
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

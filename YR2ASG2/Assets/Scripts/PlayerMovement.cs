@@ -1,3 +1,7 @@
+/* Author: Gao Ziyu
+ * Date: 09/ 06 /2023
+ * Description: The PlayerMovement class is used for player controls and movement purposes
+ */
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

@@ -1,3 +1,7 @@
+/* Author: Gao Ziyu
+ * Date: 09/ 06 /2023
+ * Description: The Gun class is used for gun controls
+ */
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;

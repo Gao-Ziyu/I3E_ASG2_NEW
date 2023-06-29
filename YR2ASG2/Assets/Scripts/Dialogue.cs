@@ -1,3 +1,7 @@
+/* Author: Gao Ziyu
+ * Date: 09/ 06 /2023
+ * Description: The Dialogue class is used for in-game dialogues
+ */
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

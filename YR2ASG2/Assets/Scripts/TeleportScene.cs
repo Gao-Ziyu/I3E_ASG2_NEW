@@ -1,3 +1,7 @@
+/* Author: Gao Ziyu
+ * Date: 09/ 06 /2023
+ * Description: The Teleport class is used for teleporting between scenes
+ */
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

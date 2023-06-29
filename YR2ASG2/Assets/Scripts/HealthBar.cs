@@ -1,3 +1,7 @@
+/* Author: Gao Ziyu
+ * Date: 09/ 06 /2023
+ * Description: The HealthBar class is used for player health system
+ */
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
