@@ -7,8 +7,9 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.Events;
+using static PlayerMovement;
 
-public class Gun : MonoBehaviour
+public class Gun : MonoBehaviour, IInteractable
 {
     [SerializeField] PlayerMovement capsule;
 
@@ -29,17 +30,8 @@ public class Gun : MonoBehaviour
 
     public AudioSource shooting_sound;
 
-    // Start is called before the first frame update
-    void Start()
+    public void OnShoot()
     {
-        CurrentCooldown = FireCooldown;
-        shooting_sound = GetComponent<AudioSource>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        Debug.Log("gun enabled: " + enableGun);
         if (enableGun)
         {
             if (Automatic)
@@ -70,6 +62,20 @@ public class Gun : MonoBehaviour
             }
             CurrentCooldown -= Time.deltaTime;
         }
+    }
+
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        CurrentCooldown = FireCooldown;
+        shooting_sound = GetComponent<AudioSource>();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        int layerMask = 1 << 7;
     }
     public void Collected()
     {

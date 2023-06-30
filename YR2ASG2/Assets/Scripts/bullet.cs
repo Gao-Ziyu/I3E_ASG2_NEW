@@ -8,12 +8,22 @@ using UnityEngine;
 
 public class bullet : MonoBehaviour
 {
-    private void OnTriggerEnter(Collider other)
+
+    private void OnCollisionEnter(Collision collision)
     {
-        if (other.gameObject.tag == "player")
+        if(collision.gameObject.tag == "player")
+        {
+            
+        }
+        if (collision.gameObject.tag == "floor")
         {
             Destroy(gameObject);
-            Debug.Log("touch me");
         }
+    }
+
+    private void FixedUpdate()
+    {
+        int layerMask = 1 << 7;
+        layerMask = ~layerMask;
     }
 }

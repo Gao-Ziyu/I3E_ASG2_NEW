@@ -6,18 +6,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using static PlayerMovement;
 
-public class TeleportScene : MonoBehaviour
+public class TeleportScene : MonoBehaviour, IInteractable
 {
+    [SerializeField] PlayerMovement capsule;
     public string scenename;
 
-    private void OnTriggerEnter(Collider other)
+    public void Teleport()
     {
-        if (other.CompareTag("player"))
-        {
-            SceneManager.LoadScene(scenename);
-            Debug.Log("teleport");
-        }
+        SceneManager.LoadScene(scenename);
+    }
 
+    public void Interact()
+    {
+        if (scenename == "Lab")
+        {
+            Teleport();
+        }
+        else if (scenename == "SampleScene")
+        {
+            if (capsule.labcardCollected && capsule.toolboxCollected)
+            {
+                Teleport();
+            }
+        }
     }
 }

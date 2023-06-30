@@ -9,6 +9,7 @@ using UnityEngine.AI;
 
 public class Entity : MonoBehaviour
 {
+    int layerMask = 1 << 7;
     [SerializeField] private float StartingHealth;
 
     public NavMeshAgent agent;
@@ -67,7 +68,6 @@ public class Entity : MonoBehaviour
         if (walkPointSet)
         {
             agent.SetDestination(walkPoint);
-            Debug.Log("patrolling " + walkPoint);
         }
 
         Vector3 distanceToWalkPoint = transform.position - walkPoint;
@@ -98,7 +98,6 @@ public class Entity : MonoBehaviour
     private void ChasePlayer()
     {
         agent.SetDestination(player.position);
-        Debug.Log("chasing");
     }
 
     //attack player when in sight & attack range
@@ -114,7 +113,6 @@ public class Entity : MonoBehaviour
         {
             //attack 
             ShootAtPlayer();
-            Debug.Log("shoot");
         }
     }
 
@@ -128,8 +126,8 @@ public class Entity : MonoBehaviour
 
         GameObject bulletObj = Instantiate(enemyBullet, spawnPoint.transform.position, spawnPoint.transform.rotation) as GameObject;
         Rigidbody bulletRig = bulletObj.GetComponent<Rigidbody>();
-        bulletRig.AddForce(bulletRig.transform.forward * enemySpeed);
-        Destroy(bulletObj, 0.1f);
+        bulletRig.AddForce((player.transform.position - bulletRig.transform.position).normalized * 20f, ForceMode.Impulse);
+        Destroy(bulletObj, 2f);
     }
 
     //enemy health
@@ -143,11 +141,23 @@ public class Entity : MonoBehaviour
         {
             health = value;
             Debug.Log(health);
+        }
+    }
 
-            if (health <= 0f)
-            {
-                Destroy(gameObject);
-            }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.tag == "bullet")
+        {
+            TakeDamage(5);
+        }
+    }
+
+    public void TakeDamage(int damage)
+    {
+        health -= damage;
+        if (health <= 0)
+        {
+            Destroy(gameObject);
         }
     }
 

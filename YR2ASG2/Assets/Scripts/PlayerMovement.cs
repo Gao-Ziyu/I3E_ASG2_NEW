@@ -21,7 +21,7 @@ public class PlayerMovement : MonoBehaviour
     //public GameObject camera;
     //player movement
     Vector3 movementInput = Vector3.zero;
-    public float movementSpeed = 0.07f;
+    public float movementSpeed = 2f;
     //rotation
     Vector3 rotationInput = Vector3.zero;
     public float rotationSpeed = 1f;
@@ -47,6 +47,8 @@ public class PlayerMovement : MonoBehaviour
 
     public bool cardCollected = false;
     public bool gunCollected = false;
+    public bool labcardCollected = false;
+    public bool toolboxCollected = false;
 
     public GameObject PlayerAttack;
     public GameObject PlayerAim;
@@ -57,6 +59,9 @@ public class PlayerMovement : MonoBehaviour
 
     float interactionDistance = 3f;
     float interactionRange = 3f;
+
+    public GameObject respawn;
+    public GameObject pause;
 
     public interface IInteractable
     {
@@ -82,18 +87,19 @@ public class PlayerMovement : MonoBehaviour
         {
             dialogue.MapDialogue();
         }
-        if (collision.gameObject.tag == "lava")
+        if (collision.gameObject.tag == "enemybullet")
         {
-            deadge = true;
-            Debug.Log("i die u win");
+            TakeDamage(2);
         }
     }
 
-    /*public void Awake()
+    private void OnCollisionStay(Collision collision)
     {
-        DontDestroyOnLoad(gameObject);
-
-    }*/
+        if (collision.gameObject.CompareTag("lava"))
+        {
+            TakeDamage(1);
+        }
+    }
 
     void OnLook(InputValue value)
     {
@@ -107,7 +113,7 @@ public class PlayerMovement : MonoBehaviour
 
     void OnClick()
     {
-
+        PlayerAttack.GetComponent<Gun>().OnShoot();
     }
 
     void OnJump(InputValue value) //Event called when Spacebar is pressed
@@ -130,8 +136,14 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            movementSpeed = 5f;
+            movementSpeed = 2f;
         }
+        Debug.Log("Speed value:" + movementSpeed);
+    }
+
+    void OnEscape()
+    {
+        pause.SetActive(true);
     }
 
     void OnInteract(InputValue value) // when E pressed, interact
@@ -149,9 +161,9 @@ public class PlayerMovement : MonoBehaviour
 
                 if (hitInfo.collider.gameObject.tag == "gun")
                 {
+                    interactObj.Interact();
                     PlayerAttack.SetActive(true);
                     PlayerAim.SetActive(true);
-
                     PlayerAttack.GetComponent<Gun>().Enable();
                 }
             }
@@ -169,6 +181,9 @@ public class PlayerMovement : MonoBehaviour
         PlayerAttack.SetActive(false);
         PlayerAim.SetActive(false);
 
+        respawn.SetActive(false);
+        pause.SetActive(false);
+
         gunCollected = false;
         cardCollected = false;
     }
@@ -176,19 +191,9 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        int layerMask = 1 << 7;
+
         if (deadge) return;
-        /*Vector3 forwardDir = transform.forward; //Object forward action
-
-        forwardDir *= movementInput.y;          // W/S keyboard input 1 / 0 / -1 (y value)
-
-        Vector3 rightDir = transform.right;     // Object right action
-
-        rightDir *= movementInput.x;            // A/D Keyboard input 1 / 0 / -1 (x value)
-
-        GetComponent<Rigidbody>().MovePosition(transform.position +
-            (forwardDir + rightDir) * movementSpeed);*/
-
-
         //create a new vector3
         Vector3 movementVector = Vector3.zero;
 
@@ -230,7 +235,7 @@ public class PlayerMovement : MonoBehaviour
         {
             // Shift key is released
             // when released, bar will charge up
-            movementSpeed = 7f;
+            movementSpeed = 2f;
             sprinting = false;
         }
 
@@ -240,34 +245,13 @@ public class PlayerMovement : MonoBehaviour
             if (chargeBar.fillAmount <= 0)
             {
                 sprinting = false;
-                movementSpeed = 5f;
+                movementSpeed = 7f;
             }
         }
         else
         {
             chargeBar.fillAmount += 0.5f * Time.deltaTime;
         }
-
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            TakeDamage(20);
-        }
-
-        //pick gun up
-        /*if (Input.GetKeyUp(KeyCode.E))
-        {
-            Debug.Log("gun picked");
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-            if (Physics.Raycast(ray, out hit, 100) && hit.collider.tag == "gun")
-            {
-                Debug.Log("pick up gun");
-                PlayerAttack.SetActive(true);
-                PlayerAim.SetActive(true);
-
-            }
-        }*/
-
     }
     public void TakeDamage(int damage)
     {
@@ -280,6 +264,7 @@ public class PlayerMovement : MonoBehaviour
             GetComponent<Animator>().SetTrigger("dead");
             deadge = true;
             Debug.Log("i die u win");
+            respawn.SetActive(true);
 
         }
     }

@@ -8,6 +8,7 @@ using UnityEngine;
 
 public class GunDamage : MonoBehaviour
 {
+    int layerMask = 1 << 7;
     public float Damage;
     public float BulletRange;
     private Transform camera;
@@ -23,13 +24,13 @@ public class GunDamage : MonoBehaviour
 
     public void Shoot()
     {
-        Ray gunRay = new Ray(camera.position, camera.forward);
+        Ray gunRay = new Ray(fpsCamera.transform.position, fpsCamera.transform.forward);
         if (Physics.Raycast(gunRay, out RaycastHit hitInfo, BulletRange))
         {
             if(hitInfo.collider.gameObject.TryGetComponent(out Entity enemy))
             {
                 enemy.Health -= Damage;
-                Debug.Log("hit");
+                Debug.Log(enemy.Health);
             }
         }
         Instantiate(impactEffect, hitInfo.point, Quaternion.LookRotation(hitInfo.normal));

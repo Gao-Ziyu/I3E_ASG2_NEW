@@ -16,6 +16,11 @@ TagManager:
   - gun
   - spawnPlayer
   - lava
+  - toolbox
+  - labcard
+  - enemy
+  - bullet
+  - enemybullet
   layers:
   - Default
   - TransparentFX
