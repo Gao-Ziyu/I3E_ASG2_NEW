@@ -250,12 +250,16 @@ public class PlayerMovement : MonoBehaviour
                 {
                     gunCollected = true;
                     interactObj.Interact();
-                    PlayerAttack.SetActive(true);
-                    PlayerAim.SetActive(true);
-                    PlayerAttack.GetComponent<Gun>().Enable();
+                    ActivateGun();
                 }
             }
         }
+    }
+    public void ActivateGun()
+    {
+        PlayerAttack.SetActive(true);
+        PlayerAim.SetActive(true);
+        PlayerAttack.GetComponent<Gun>().Enable();
     }
 
     // Start is called before the first frame update

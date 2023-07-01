@@ -159,7 +159,6 @@ public class GameManager : MonoBehaviour
             {
                 GameObject player = Instantiate(playerPrefab, marker.transform.position, marker.transform.rotation);
                 activePlayer = player.GetComponent<PlayerMovement>();
-                Debug.Log(activePlayer.gameObject.name);
             }
             else
             {
@@ -167,9 +166,7 @@ public class GameManager : MonoBehaviour
                     = marker.transform.position;
                 activePlayer.transform.rotation
                     = marker.transform.rotation;
-                Debug.Log("Player position:" + playerPrefab.transform.position );
             }
-
         }
 
     }
