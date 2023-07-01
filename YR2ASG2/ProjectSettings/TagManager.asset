@@ -21,6 +21,7 @@ TagManager:
   - enemy
   - bullet
   - enemybullet
+  - final
   layers:
   - Default
   - TransparentFX

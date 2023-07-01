@@ -8,7 +8,9 @@ using UnityEngine;
 
 public class bullet : MonoBehaviour
 {
-
+    /// <summary>
+    /// on collision to floor the bullet will destroy
+    /// </summary>
     private void OnCollisionEnter(Collision collision)
     {
         if(collision.gameObject.tag == "player")
@@ -23,6 +25,7 @@ public class bullet : MonoBehaviour
 
     private void FixedUpdate()
     {
+        //raycast layermask so bullet shoot through
         int layerMask = 1 << 7;
         layerMask = ~layerMask;
     }

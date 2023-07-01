@@ -10,7 +10,16 @@ using static PlayerMovement;
 
 public class card : MonoBehaviour, IInteractable
 {
+    /// <summary>
+    /// get player from player script
+    /// </summary>
     [SerializeField] PlayerMovement capsule;
+
+    /// <summary>
+    /// audio played when card is collected
+    /// </summary>
+    public AudioSource cardCollected;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -22,23 +31,24 @@ public class card : MonoBehaviour, IInteractable
     {
 
     }
-    void IdleComplete()
-    {
-    }
 
+    /// <summary>
+    /// collect card
+    /// </summary>
     public void Collected()
     {
-        GetComponent<Animator>().SetTrigger("cardCollect");
-        GetComponent<AudioSource>().Play();
         Interact();
 
     }
 
+    /// <summary>
+    /// press E to INTERACT with card
+    /// </summary>
     public void Interact()
     {
-
-        Debug.Log("card collected");
+        GetComponent<Animator>().SetTrigger("cardCollect");
+        cardCollected.Play();
         capsule.cardCollected = true;
-        Destroy(gameObject);
+        gameObject.SetActive(false);
     }
 }

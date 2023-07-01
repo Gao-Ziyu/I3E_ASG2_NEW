@@ -15,11 +15,20 @@ using UnityEngine.SceneManagement;
 
 public class AutoDoors : MonoBehaviour
 {
+    /// <summary>
+    /// get player from player script
+    /// </summary>
     [SerializeField] PlayerMovement capsule;
+
+    /// <summary>
+    /// auto door animation
+    /// </summary>
     public bool isAuto;
     public Animator animation;
 
-    //collide to open door
+    /// <summary>
+    /// when player get close, the door will open automatically
+    /// </summary>
     private void OnTriggerEnter(Collider other)
     {
         if(other.tag == "player")
@@ -28,6 +37,9 @@ public class AutoDoors : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// when player leaves, the door will close automatically
+    /// </summary>
     private void OnTriggerExit(Collider other)
     {
         if (other.tag == "player")

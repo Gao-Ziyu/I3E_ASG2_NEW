@@ -10,21 +10,34 @@ using static PlayerMovement;
 
 public class TeleportScene : MonoBehaviour, IInteractable
 {
+    /// <summary>
+    /// get player from player script
+    /// </summary>
     [SerializeField] PlayerMovement capsule;
-    public string scenename;
 
+    /// <summary>
+    /// enter the scene index to load scene of choice
+    /// </summary>
+    public int sceneToLoad;
+
+    /// <summary>
+    /// teleport with a fade transition
+    /// </summary>
     public void Teleport()
     {
-        SceneManager.LoadScene(scenename);
+        GameManager.instance.LoadScene(sceneToLoad);
     }
 
+    /// <summary>
+    /// press E to interact and teleport to the next scene
+    /// </summary>
     public void Interact()
     {
-        if (scenename == "Lab")
+        if (sceneToLoad == 2)
         {
             Teleport();
         }
-        else if (scenename == "SampleScene")
+        else if (sceneToLoad == 1)
         {
             if (capsule.labcardCollected && capsule.toolboxCollected)
             {

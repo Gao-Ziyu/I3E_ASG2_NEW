@@ -9,7 +9,15 @@ using static PlayerMovement;
 
 public class labcard : MonoBehaviour, IInteractable
 {
+    /// <summary>
+    /// get player from player script
+    /// </summary>
     [SerializeField] PlayerMovement capsule;
+
+    /// <summary>
+    /// audio when labcard is collected
+    /// </summary>
+    public AudioSource labcardCollected;
 
     // Start is called before the first frame update
     void Start()
@@ -23,17 +31,21 @@ public class labcard : MonoBehaviour, IInteractable
 
     }
 
+    /// <summary>
+    /// collect lab card
+    /// </summary>
     public void Collected()
     {
-        GetComponent<Animator>().SetTrigger("cardCollect");
-        GetComponent<AudioSource>().Play();
         Interact();
-
     }
 
+    /// <summary>
+    /// when E is pressed, lab card will be collected
+    /// </summary>
     public void Interact()
     {
-        Debug.Log("Lab card collected");
+        GetComponent<Animator>().SetTrigger("cardCollect");
+        labcardCollected.Play();
         capsule.labcardCollected = true;
         Destroy(gameObject);
     }

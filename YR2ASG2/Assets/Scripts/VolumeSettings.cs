@@ -9,8 +9,14 @@ using UnityEngine.Audio;
 
 public class VolumeSettings : MonoBehaviour
 {
+    /// <summary>
+    /// audio mixer to set volume
+    /// </summary>
     public AudioMixer audioMixer;
 
+    /// <summary>
+    /// set volume
+    /// </summary>
     public void SetVolume(float volume)
     {
         audioMixer.SetFloat("volume", volume);

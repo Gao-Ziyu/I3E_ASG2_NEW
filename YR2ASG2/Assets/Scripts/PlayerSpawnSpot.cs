@@ -6,6 +6,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// player spawn point
+/// </summary>
 public class PlayerSpawnSpot : MonoBehaviour
 {
     

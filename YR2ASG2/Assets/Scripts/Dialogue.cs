@@ -11,21 +11,36 @@ using System;
 
 public class Dialogue : MonoBehaviour
 {
+    [SerializeField] PlayerMovement capsule;
+    /// <summary>
+    /// text componentto be put displayed
+    /// </summary>
     public TextMeshProUGUI textComponent;
     public TextMeshProUGUI mapDialogue;
+
+    /// <summary>
+    /// insert at inspector
+    /// </summary>
     public string[] lines;
     public string[] maps;
-    public float textSpeed;
 
+    /// <summary>
+    /// text speed for text to appear
+    /// </summary>
+    public float textSpeed;
     private int index;
     private bool dialogue = true;
     private bool map = false;
+
     // Start is called before the first frame update
     void Start()
     {
         textComponent.text = string.Empty;
         mapDialogue.enabled = false;
-        StartDialogue();
+        if (!capsule.toolboxCollected)
+        {
+            StartDialogue();
+        }
         FindObjectOfType<PlayerMovement>().dialogue = this;
     }
 
@@ -63,10 +78,11 @@ public class Dialogue : MonoBehaviour
                 }
             }
         }
-        print("dialogue: " + dialogue);
-        print("map: " + map);
     }
 
+    /// <summary>
+    /// dialogue when player interact with map
+    /// </summary>
     public void MapDialogue()
     {
         map = true;
@@ -86,12 +102,18 @@ public class Dialogue : MonoBehaviour
         StartDialogue();
     }
 
+    /// <summary>
+    /// dialogue appear start of game
+    /// </summary>
     void StartDialogue()
     {
         index = 0;
         StartCoroutine(TypeLine());
     }
 
+    /// <summary>
+    /// wrap line
+    /// </summary>
     IEnumerator TypeLine()
     {
         if (dialogue)
@@ -112,6 +134,9 @@ public class Dialogue : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// on click to finish dialogue
+    /// </summary>
     void OnClick()
     {
         if (dialogue)

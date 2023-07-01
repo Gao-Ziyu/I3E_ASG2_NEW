@@ -9,13 +9,21 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
-    //load the next level
+    //<summary>
+    // set the scene to load
+    //</summary>
+    public int sceneToLoad;
+
+    /// <summary>
+    /// load the next level
+    /// </summary>
     public void PlayGame() 
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        GameManager.instance.LoadScene(sceneToLoad = 1);
     }
-
-    //quit game
+    /// <summary>
+    /// quit game
+    /// </summary>
     public void QuitGame()
     {
         Debug.Log("Quit!");

@@ -9,40 +9,69 @@ using UnityEngine.AI;
 
 public class Entity : MonoBehaviour
 {
+    /// <summary>
+    /// enemy starting health
+    /// </summary>
     int layerMask = 1 << 7;
     [SerializeField] private float StartingHealth;
 
+    /// <summary>
+    /// navmesh enemy ai
+    /// </summary>
     public NavMeshAgent agent;
 
+    /// <summary>
+    /// player
+    /// </summary>
     public Transform player;
 
+    /// <summary>
+    /// layermask for enemy to walk on ground and detect player
+    /// </summary>
     public LayerMask whatIsGround, whatIsPlayer;
 
-    //enemy shoot
+    /// <summary>
+    /// enemy shoot and attack
+    /// </summary>
     [SerializeField] private float timer = 5;
     private float bulletTime;
     public GameObject enemyBullet;
     public Transform spawnPoint;
     public float enemySpeed;
 
-    //patroling
+    /// <summary>
+    /// patrolling 
+    /// </summary>
     public Vector3 walkPoint;
     bool walkPointSet;
     public float walkPointRange;
 
-    //attacking
+    /// <summary>
+    /// attacking
+    /// </summary>
     public float timeBetweenAttacks;
     bool alreadyAttacked;
 
-    //check range
+    /// <summary>
+    /// check range for enemies
+    /// </summary>
     public float sightRange, attackRange;
     public bool playerInSightRange, playerInAttackRange;
 
+    /// <summary>
+    /// health
+    /// </summary>
     private float health;
 
+    /// <summary>
+    /// detect player
+    /// </summary>
     public TriggerPlayer triggerRange;
     public TriggerPlayer attackTrigger;
 
+    /// <summary>
+    /// on play get enemies
+    /// </summary>
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -60,7 +89,9 @@ public class Entity : MonoBehaviour
         if (playerInSightRange && playerInAttackRange) AttackPlayer();
     }
 
-    //patrol when player not in sight
+    /// <summary>
+    /// patrol around when player not in sight
+    /// </summary>
     private void Patroling()
     {
         if (!walkPointSet) SearchWalkPoint();
@@ -79,7 +110,9 @@ public class Entity : MonoBehaviour
         }
     }
 
-    //search for a walk point
+    /// <summary>
+    /// search for a walkpoint
+    /// </summary>
     private void SearchWalkPoint()
     {
         //calculate random point in range
@@ -94,13 +127,17 @@ public class Entity : MonoBehaviour
         }
     }
 
-    //chase when player in sight but not in attack range
+    /// <summary>
+    /// chase when player in sight but not in attack range
+    /// </summary>
     private void ChasePlayer()
     {
         agent.SetDestination(player.position);
     }
 
-    //attack player when in sight & attack range
+    /// <summary>
+    /// attack player when in sight & attack range
+    /// </summary>
     private void AttackPlayer()
     {
         //make sure enemy don't move
@@ -116,7 +153,9 @@ public class Entity : MonoBehaviour
         }
     }
 
-    //attack player by shooting
+    /// <summary>
+    /// attack player by shooting
+    /// </summary>
     void ShootAtPlayer()
     {
         bulletTime -= Time.deltaTime;
@@ -130,7 +169,9 @@ public class Entity : MonoBehaviour
         Destroy(bulletObj, 2f);
     }
 
-    //enemy health
+    /// <summary>
+    /// enemy health
+    /// </summary>
     public float Health
     {
         get
@@ -144,6 +185,9 @@ public class Entity : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// when collide with bullet tag enemy take 5 damage
+    /// </summary>
     private void OnCollisionEnter(Collision collision)
     {
         if(collision.gameObject.tag == "bullet")
@@ -152,6 +196,9 @@ public class Entity : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// when enemy health = 0 will destroy enemy
+    /// </summary>
     public void TakeDamage(int damage)
     {
         health -= damage;

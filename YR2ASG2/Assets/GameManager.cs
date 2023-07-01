@@ -1,6 +1,6 @@
 /* Author: Gao Ziyu
  * Date: 09/ 06 /2023
- * Description: The GameManager class is used for game managing
+ * Description: The GameManager class is used for scenes managing & player spawn
  */
 using System.Collections;
 using System.Collections.Generic;
@@ -11,15 +11,31 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    //prefab of player used for spawning
+    /// <summary>
+    /// prefab of player used for spawning
+    /// </summary>
     public GameObject playerPrefab;
 
+    /// <summary>
+    /// reset player respawn
+    /// </summary>
     public bool ResetPlayer;
-    //
+
+    /// <summary>
+    /// scene load index
+    /// </summary>
+    private int loadIndex;
+
+    /// <summary>
+    /// check if player is active in the scene
+    /// </summary>
     private PlayerMovement activePlayer;
 
     public static GameManager instance;
 
+    /// <summary>
+    /// black screen fade transition
+    /// </summary>
     public Image fadeImage;
     private Color fadeColor = new Color();
 
@@ -30,8 +46,21 @@ public class GameManager : MonoBehaviour
     private float fadeDuration = 1.5f;
     private float fadeTimer;
 
-    //public static int score;
+    /// <summary>
+    /// black screen transition when teleport to the next scene
+    /// </summary>
+    public void LoadScene(int index)
+    {
+        loadIndex = index;
+        fadeTimer = 0;
+        OnTransition = true;
+        OnFadeOut = true;
+        OnFadeIn = false;
+    }
 
+    /// <summary>
+    /// fade out transition
+    /// </summary>
     private void FadeOut()
     {
         fadeTimer += Time.deltaTime;
@@ -39,11 +68,15 @@ public class GameManager : MonoBehaviour
         {
             fadeTimer = fadeDuration;
             OnFadeOut = false;
+            SceneManager.LoadScene(loadIndex);
         }
         fadeColor.a = fadeTimer / fadeDuration;
         fadeImage.color = fadeColor;
     }
 
+    /// <summary>
+    /// fade in transition
+    /// </summary>
     private void FadeIn()
     {
         fadeTimer -= Time.deltaTime;
@@ -71,7 +104,7 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-
+    // Start is called before the first frame update
     private void Start()
     {
         OnTransition = true;
@@ -79,6 +112,9 @@ public class GameManager : MonoBehaviour
         fadeTimer = fadeDuration;
     }
 
+    /// <summary>
+    /// spaawn player when game starts
+    /// </summary>
     public void Awake()
     {
         if (instance != null && instance != this)
@@ -94,7 +130,10 @@ public class GameManager : MonoBehaviour
         }
 
     }
-    // Start is called before the first frame update
+
+    /// <summary>
+    /// spawn player on load
+    /// </summary>
     void SpawnPlayerOnLoad(Scene prev, Scene next)
     {
         if (ResetPlayer)

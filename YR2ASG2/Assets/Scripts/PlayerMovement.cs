@@ -15,64 +15,127 @@ using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
+    /// <summary>
+    /// set dialogue
+    /// </summary>
     public Dialogue dialogue;
+
+    /// <summary>
+    /// get the doors from auto doors script
+    /// </summary>
     [SerializeField] AutoDoors doors;
-    //public int lab;
-    //public GameObject camera;
-    //player movement
+
+    /// <summary>
+    /// player movement
+    /// </summary>
     Vector3 movementInput = Vector3.zero;
     public float movementSpeed = 2f;
-    //rotation
+
+    /// <summary>
+    /// player rotation
+    /// </summary>
     Vector3 rotationInput = Vector3.zero;
     public float rotationSpeed = 1f;
-    // Camera reference
+
+    /// <summary>
+    /// camera reference
+    /// </summary>
     public Transform cameraTransform;
-    int score = 0;
+
     public int value = 0;
-    //camera
+
+    /// <summary>
+    /// player camera
+    /// </summary>
     public Transform camera;
-    //jump
+
+    /// <summary>
+    /// player jump force
+    /// </summary>
     public float jumpForce = 10f;
-    //ground check
+
+    /// <summary>
+    /// groundcheck for jump
+    /// </summary>
     public bool groundCheck = true;
-    //sprintbar
+
+    /// <summary>
+    /// sprint bar & sprinting
+    /// </summary>
     public Image chargeBar;
     public bool sprinting = false;
 
-    // health system
+    /// <summary>
+    /// health system
+    /// </summary>
     public int maxHealth = 100;
     public int currentHealth;
 
+    /// <summary>
+    /// player healthbar
+    /// </summary>
     public HealthBar healthbar;
 
+    /// <summary>
+    /// check if the items are collected in order to proceed
+    /// </summary>
     public bool cardCollected = false;
     public bool gunCollected = false;
     public bool labcardCollected = false;
     public bool toolboxCollected = false;
 
+    /// <summary>
+    /// gun & crosshair
+    /// </summary>
     public GameObject PlayerAttack;
     public GameObject PlayerAim;
 
     Vector3 headRotationInput;
 
+    /// <summary>
+    /// check if the player is dead or alive
+    /// </summary>
     public bool deadge = false;
 
+    /// <summary>
+    /// raycast interaction
+    /// </summary>
     float interactionDistance = 3f;
     float interactionRange = 3f;
-
+    
+    /// <summary>
+    /// respawn & pause menus
+    /// </summary>
     public GameObject respawn;
     public GameObject pause;
 
+    /// <summary>
+    /// player death audio
+    /// </summary>
+    public AudioSource death;
+
+    /// <summary>
+    /// interact with objects
+    /// </summary>
     public interface IInteractable
     {
         public void Interact();
     }
 
+    /// <summary>
+    /// dont destroy player on load
+    /// </summary>
     public void Awake()
     {
         DontDestroyOnLoad(gameObject);
     }
 
+    /// <summary>
+    /// when collided on floor tag, player can jump and groundcheck
+    /// when collided on door tag the door animation plays
+    /// when collided on map tag a dialogue appears
+    /// when collided on enemybullet tag, player minus health
+    /// </summary>
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "floor")
@@ -93,6 +156,9 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// when player stays on the lava tag, will take damage overtime
+    /// </summary>
     private void OnCollisionStay(Collision collision)
     {
         if (collision.gameObject.CompareTag("lava"))
@@ -101,22 +167,38 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// player head rotation
+    /// </summary>
     void OnLook(InputValue value)
     {
         rotationInput.y = value.Get<Vector2>().x; //look left n right
         rotationInput.x = value.Get<Vector2>().y * -1; //look up and down
     }
-    void OnMove(InputValue value) //Event called when WASD is pressed
+
+    /// <summary>
+    /// Event called when WASD is pressed
+    /// </summary>
+    void OnMove(InputValue value)
     {
         movementInput = value.Get<Vector2>();
     }
 
+    /// <summary>
+    /// Event called when left click on mouse
+    /// </summary>
     void OnClick()
     {
-        PlayerAttack.GetComponent<Gun>().OnShoot();
+        if (gunCollected == true)
+        {
+            PlayerAttack.GetComponent<Gun>().OnShoot();
+        }
     }
 
-    void OnJump(InputValue value) //Event called when Spacebar is pressed
+    /// <summary>
+    /// Event called when Spacebar is pressed
+    /// </summary>
+    void OnJump(InputValue value) 
     {
         if (groundCheck)
         {
@@ -126,7 +208,10 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
-    void OnSprint(InputValue value) //Event called when left shift is pressed
+    /// <summary>
+    /// Event called when left shift is pressed
+    /// </summary>
+    void OnSprint(InputValue value)
     {
         // charge bar more than 0 player can sprint and charge bar will decrease
         if (chargeBar.fillAmount > 0)
@@ -138,29 +223,32 @@ public class PlayerMovement : MonoBehaviour
         {
             movementSpeed = 2f;
         }
-        Debug.Log("Speed value:" + movementSpeed);
     }
 
+    /// <summary>
+    /// Event called when escape key is pressed
+    /// </summary>
     void OnEscape()
     {
         pause.SetActive(true);
     }
 
-    void OnInteract(InputValue value) // when E pressed, interact
+    /// <summary>
+    /// event called when E key is pressed
+    /// </summary>
+    void OnInteract(InputValue value)
     {
         Ray r = new Ray(transform.position, transform.forward);
         Debug.DrawRay(transform.position, transform.forward * interactionRange, Color.red, 1.0f);
         if (Physics.Raycast(r, out RaycastHit hitInfo, interactionRange))
         {
-            Debug.Log("Hit : " + hitInfo.transform.gameObject.name);
             // call the interact function on the interct object
             if (hitInfo.collider.gameObject.TryGetComponent(out IInteractable interactObj))
             {
                 interactObj.Interact();
-                Debug.Log("Interacted with " + hitInfo.collider.gameObject.name);
-
                 if (hitInfo.collider.gameObject.tag == "gun")
                 {
+                    gunCollected = true;
                     interactObj.Interact();
                     PlayerAttack.SetActive(true);
                     PlayerAim.SetActive(true);
@@ -178,12 +266,16 @@ public class PlayerMovement : MonoBehaviour
         //set health to max
         currentHealth = maxHealth;
         healthbar.SetMaxHealth(maxHealth);
+
+        //hide gun & crosshair on start
         PlayerAttack.SetActive(false);
         PlayerAim.SetActive(false);
 
+        //hide respawn & pause menus on start
         respawn.SetActive(false);
         pause.SetActive(false);
 
+        //reset player inventory
         gunCollected = false;
         cardCollected = false;
     }
@@ -224,7 +316,7 @@ public class PlayerMovement : MonoBehaviour
         RaycastHit hitInfo;
         if (Physics.Raycast(transform.position, transform.forward, out hitInfo, interactionDistance))
         {
-            Debug.Log(hitInfo.transform.name);
+
         }
 
 
@@ -245,7 +337,7 @@ public class PlayerMovement : MonoBehaviour
             if (chargeBar.fillAmount <= 0)
             {
                 sprinting = false;
-                movementSpeed = 7f;
+                movementSpeed = 2f;
             }
         }
         else
@@ -253,6 +345,10 @@ public class PlayerMovement : MonoBehaviour
             chargeBar.fillAmount += 0.5f * Time.deltaTime;
         }
     }
+
+    /// <summary>
+    /// TakeDamage & death trigger for player
+    /// </summary>
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
@@ -262,6 +358,7 @@ public class PlayerMovement : MonoBehaviour
         if (currentHealth <= 0)
         {
             GetComponent<Animator>().SetTrigger("dead");
+            death.Play();
             deadge = true;
             Debug.Log("i die u win");
             respawn.SetActive(true);

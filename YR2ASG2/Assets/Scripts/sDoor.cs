@@ -8,13 +8,22 @@ using UnityEngine;
 
 public class sDoor : MonoBehaviour
 {
+    /// <summary>
+    /// get player from player script
+    /// </summary>
     [SerializeField] PlayerMovement capsule;
+
+    /// <summary>
+    /// auto door animation
+    /// </summary>
     public bool isAuto;
     public Animator animation;
     public Rigidbody door;
     public Collider barrier;
 
-    //collide to open door
+    /// <summary>
+    /// get close & if card is collected, door will unlock if not if will not unlock
+    /// </summary>
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "player" && capsule.cardCollected)
@@ -25,6 +34,9 @@ public class sDoor : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// door close when player exits
+    /// </summary>
     private void OnTriggerExit(Collider other)
     {
         if (other.tag == "player")

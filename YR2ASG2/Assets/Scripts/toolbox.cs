@@ -9,7 +9,15 @@ using static PlayerMovement;
 
 public class toolbox : MonoBehaviour, IInteractable
 {
+    /// <summary>
+    /// get player from player script
+    /// </summary>
     [SerializeField] PlayerMovement capsule;
+
+    /// <summary>
+    /// audio played when toolbox is collected
+    /// </summary>
+    public AudioSource toolboxCollected;
 
     // Start is called before the first frame update
     void Start()
@@ -23,16 +31,20 @@ public class toolbox : MonoBehaviour, IInteractable
 
     }
 
+    /// <summary>
+    /// collect toolbox
+    /// </summary>
     public void Collected()
     {
-        GetComponent<Animator>().SetTrigger("cardCollect");
-        GetComponent<AudioSource>().Play();
         Interact();
-
     }
 
+    /// <summary>
+    /// interact with toolbox by pressing E
+    /// </summary>
     public void Interact()
     {
+        toolboxCollected.Play();
         Debug.Log("toolbox collected");
         capsule.toolboxCollected = true;
         Destroy(gameObject);

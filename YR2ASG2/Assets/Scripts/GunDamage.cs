@@ -9,11 +9,24 @@ using UnityEngine;
 public class GunDamage : MonoBehaviour
 {
     int layerMask = 1 << 7;
+
+    /// <summary>
+    /// bullet damage
+    /// </summary>
     public float Damage;
+    /// <summary>
+    /// bullet range
+    /// </summary>
     public float BulletRange;
+    /// <summary>
+    /// bullet camera
+    /// </summary>
     private Transform camera;
     public Camera fpsCamera;
 
+    /// <summary>
+    /// shooting effect
+    /// </summary>
     public GameObject impactEffect;
 
     // Start is called before the first frame update
@@ -22,6 +35,9 @@ public class GunDamage : MonoBehaviour
         camera = Camera.main.transform;
     }
 
+    /// <summary>
+    /// shoot function. when shot bullet will deal damage to enemies and having shooting effects
+    /// </summary>
     public void Shoot()
     {
         Ray gunRay = new Ray(fpsCamera.transform.position, fpsCamera.transform.forward);
